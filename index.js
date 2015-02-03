@@ -1,8 +1,38 @@
-var protect = require('./lib/static-protect.js');
 var env = require('node-env-file');
+var express = require('express');
+var protect = require('./lib/static-protect.js');
+var Mkdocs = require('./lib/mkdocs.js');
+var githubhook = require('githubhook');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer({});
 
 env(__dirname + '/.env');
 
-var server = new protect(__dirname)
+var mkdocs = new Mkdocs('master', __dirname, 'site', process.env.GITHUB_USER, process.env.GITHUB_PASS);
 
-server.start();
+var github_hook = process.env.GITHUB_HOOK || '/github/callback';
+var github_port = '3420';
+var github = githubhook({path: github_hook, port: github_port});
+
+github.on('push', function (repo, ref, data) {
+  mkdocs.build(data['repository']['full_name']);
+});
+
+github.listen();
+
+var app = express();
+
+app.post(github_hook, function(req, res) {
+  proxy.web(req, res, {
+    target: 'http://127.0.0.1:' + github_port
+  });
+});
+
+var server = new protect(__dirname);
+server.init(app);
+
+app.listen('3000');
+
+console.log('Server started http://127.0.0.1:3000');
+
