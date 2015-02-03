@@ -37,7 +37,7 @@ app.post(github_hook, function(req, res) {
 var server = new protect(__dirname);
 server.init(app);
 
-app.listen('3000');
+app.listen(process.env.PORT || 3000);
 
 console.log('Server started http://127.0.0.1:3000');
 
