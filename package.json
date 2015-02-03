@@ -1,6 +1,12 @@
 {
   "name": "static-protect",
   "version": "0.1.0",
+  "engines": {
+    "node": "0.10.29"
+  },
+  "engines": {
+    "npm": "1.4.14"
+  },
   "dependencies": {
     "express": ">= 0.0.0",
     "ejs": ">= 0.0.0",
