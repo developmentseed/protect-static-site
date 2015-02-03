@@ -7,7 +7,12 @@ var httpProxy = require('http-proxy');
 
 var proxy = httpProxy.createProxyServer({});
 
-env(__dirname + '/.env');
+try {
+  env(__dirname + '/.env');
+}
+catch(err) {
+  console.log(err);
+}
 
 var mkdocs = new Mkdocs('master', __dirname, 'site', process.env.GITHUB_USER, process.env.GITHUB_PASS);
 
