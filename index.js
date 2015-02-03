@@ -14,14 +14,21 @@ catch(err) {
   console.log(err);
 }
 
+var REPO = process.env.REPO || false;
+
 var mkdocs = new Mkdocs('master', __dirname, 'site', process.env.GITHUB_USER, process.env.GITHUB_PASS);
+
+if (REPO) {
+  mkdocs.build(REPO);
+}
 
 var github_hook = process.env.GITHUB_HOOK || '/github/callback';
 var github_port = '3420';
 var github = githubhook({path: github_hook, port: github_port});
 
 github.on('push', function (repo, ref, data) {
-  mkdocs.build(data['repository']['full_name']);
+  if (REPO === data['repository']['full_name'])
+    mkdocs.build(data['repository']['full_name']);
 });
 
 github.listen();
