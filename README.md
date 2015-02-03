@@ -21,6 +21,13 @@ DIST_FOLDER=site
 REPO=developmentseed/example
 ```
 
+If the repo is private you also need to add the username and password of a github account that has access to the repo:
+
+```
+GITHUB_USER=username
+GITHUB_PASS=password
+```
+
 #### Development
 
 Add above configurations to `.env` file.
