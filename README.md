@@ -28,6 +28,14 @@ GITHUB_USER=username
 GITHUB_PASS=password
 ```
 
+#### User Limt
+
+To limit access to specific set of github users, add usernames separated by comma to as environemt variables:
+
+```
+USER_LIST=user1,user2,user3
+```
+
 #### Development
 
 Add above configurations to `.env` file.
