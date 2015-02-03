@@ -1,4 +1,4 @@
-# Password Protected Mkdocs
+# Password Protected Static Site
 
 This node app build and serve a mkdocs website on heroku with Github Authentication
 
